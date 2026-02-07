@@ -10,7 +10,7 @@ export default function TableScreen() {
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
-      
+
       {/* Header */}
       <header className="h-16 bg-white border-b border-gray-200
         flex items-center px-5 sticky top-0 z-10">
@@ -21,7 +21,7 @@ export default function TableScreen() {
 
       {/* Content */}
       <main className="flex-1 flex justify-center p-4">
-        <div className="w-full max-w-6xl flex flex-wrap gap-4 content-start">
+        <div className="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 content-start">
           {tables.map((t) => {
             const occupied = orders[t]?.length > 0;
 
@@ -31,16 +31,14 @@ export default function TableScreen() {
                 onClick={() => navigate(`/billing?table=${t}`)}
                 className={`
                   h-36
-                  w-[160px]
                   flex flex-col justify-center items-center
                   rounded-2xl border
                   cursor-pointer
                   transition
                   shadow-sm hover:shadow-md
-                  ${
-                    occupied
-                      ? "bg-red-100 border-red-300 hover:bg-red-200"
-                      : "bg-green-100 border-green-300 hover:bg-green-200"
+                  ${occupied
+                    ? "bg-red-100 border-red-300 hover:bg-red-200"
+                    : "bg-green-100 border-green-300 hover:bg-green-200"
                   }
                 `}
               >
@@ -49,9 +47,8 @@ export default function TableScreen() {
                 </strong>
 
                 <span
-                  className={`text-sm font-medium
-                    ${occupied ? "text-red-700" : "text-green-700"}
-                  `}
+                  className={`text-sm font-medium ${occupied ? "text-red-700" : "text-green-700"
+                    }`}
                 >
                   {occupied ? "Occupied" : "Free"}
                 </span>
