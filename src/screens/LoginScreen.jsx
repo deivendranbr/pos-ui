@@ -5,14 +5,31 @@ export default function LoginScreen() {
   const navigate = useNavigate();
 
   return (
-    <div style={styles.center}>
-      <Card>
-        <h2>POS Login</h2>
-        <Input placeholder="Username" />
-        <Input placeholder="Password" type="password" />
-        <Button onClick={() => navigate("/tables")}>
-          Login
-        </Button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <Card className="w-full max-w-sm p-6 shadow-lg rounded-xl bg-white">
+        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+          Waiter Login
+        </h2>
+
+        <div className="space-y-4">
+          <Input
+            placeholder="Username"
+            className="w-full"
+          />
+
+          <Input
+            placeholder="Password"
+            type="password"
+            className="w-full"
+          />
+
+          <Button
+            className="w-full mt-2"
+            onClick={() => navigate("/tables")}
+          >
+            Login
+          </Button>
+        </div>
       </Card>
     </div>
   );

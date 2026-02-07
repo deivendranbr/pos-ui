@@ -6,10 +6,28 @@ import { useOrders } from "../context/OrderContext";
 const CATEGORIES = ["All", "Beverages", "Starters", "Main Course"];
 
 const PRODUCTS = [
-	{ id: 1, name: "Tea", price: 20, category: "Beverages" },
-	{ id: 2, name: "Coffee", price: 30, category: "Beverages" },
-	{ id: 3, name: "Veg Sandwich", price: 80, category: "Starters" },
-	{ id: 4, name: "Paneer Butter Masala", price: 180, category: "Main Course" },
+  // Beverages
+  { id: 1, name: "Tea", price: 20, category: "Beverages" },
+  { id: 2, name: "Coffee", price: 30, category: "Beverages" },
+  { id: 5, name: "Cold Coffee", price: 50, category: "Beverages" },
+  { id: 6, name: "Masala Chai", price: 25, category: "Beverages" },
+  { id: 7, name: "Lemonade", price: 35, category: "Beverages" },
+  { id: 8, name: "Mango Shake", price: 60, category: "Beverages" },
+
+  // Starters
+  { id: 3, name: "Veg Sandwich", price: 80, category: "Starters" },
+  { id: 9, name: "Paneer Tikka", price: 120, category: "Starters" },
+  { id: 10, name: "French Fries", price: 60, category: "Starters" },
+  { id: 11, name: "Spring Roll", price: 90, category: "Starters" },
+  { id: 12, name: "Cheese Garlic Bread", price: 100, category: "Starters" },
+
+  // Main Course
+  { id: 4, name: "Paneer Butter Masala", price: 180, category: "Main Course" },
+  { id: 13, name: "Veg Biryani", price: 150, category: "Main Course" },
+  { id: 14, name: "Dal Makhani", price: 140, category: "Main Course" },
+  { id: 15, name: "Mix Veg Curry", price: 130, category: "Main Course" },
+  { id: 16, name: "Chole Bhature", price: 120, category: "Main Course" },
+  { id: 17, name: "Butter Naan", price: 40, category: "Main Course" },
 ];
 
 export default function BillingScreen({ onPay }) {
@@ -58,93 +76,159 @@ export default function BillingScreen({ onPay }) {
 	const total = subtotal + tax;
 
 	return (
-		<>
-			<div className="min-h-screen bg-slate-100 p-4">
-				<div style={styles.header}>
-					<Button onClick={() => navigate("/tables")} style={styles.backBtn}>
-						← Tables
+		<div className="min-h-screen bg-slate-100 p-4">
+			
+			{/* Header */}
+			<div className="flex items-center gap-3 mb-4">
+			<Button
+				onClick={() => navigate("/tables")}
+				className="bg-slate-500 hover:bg-slate-600 text-white"
+			>
+				← Tables
+			</Button>
+
+			<h2 className="text-xl font-semibold">
+				Order – Table {tableId}
+			</h2>
+			</div>
+
+			{/* Main Layout */}
+			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-100px)]">
+
+			{/* LEFT SIDE */}
+			<div className="lg:col-span-2 flex flex-col gap-4">
+
+				{/* Categories */}
+				<Card className="bg-white rounded-xl">
+					<h3 className="text-lg font-semibold mb-3">Categories</h3>
+
+					<div className="flex flex-wrap gap-2">
+						{CATEGORIES.map((c) => (
+							<Button
+							key={c}
+							onClick={() => setCategory(c)}
+							className={`
+								px-4 py-2 rounded-full text-sm font-medium
+								transition-colors duration-200
+								${
+								category === c
+									? "bg-blue-600 text-white shadow-md ring-2 ring-blue-300"
+									: "bg-slate-600 text-slate-800 hover:bg-slate-300"
+								}
+							`}
+							>
+							{c}
+							</Button>
+						))}
+					</div>
+				</Card>
+
+				{/* Items */}
+				<Card className="bg-white rounded-xl flex-1">
+				<h3 className="text-lg font-semibold mb-3">Items</h3>
+
+				<div className="grid grid-cols-2 gap-3 content-start">
+					{filteredProducts.map((p) => (
+					<div
+						key={p.id}
+						onClick={() => addItem(p)}
+						className="border rounded-lg p-3 cursor-pointer
+						hover:shadow-md transition bg-slate-50"
+					>
+						<strong className="block">{p.name}</strong>
+						<span className="text-slate-600">₹{p.price}</span>
+					</div>
+					))}
+				</div>
+				</Card>
+			</div>
+
+			{/* RIGHT SIDE – BILL */}
+			<div>
+				<Card className="bg-white rounded-xl sticky top-4">
+				<h3 className="text-lg font-semibold mb-3">Current Bill</h3>
+
+				{cart.length === 0 && (
+					<p className="text-slate-500">No items added</p>
+				)}
+
+				<div className="space-y-2">
+					{cart.map((item) => (
+					<div
+						key={item.id}
+						className="flex items-center justify-between"
+						>
+						{/* Item Name */}
+						<span className="w-24 text-slate-800 font-medium break-words leading-snug">
+							{item.name}
+						</span>
+
+						{/* Quantity Controls */}
+						<div className="flex items-center gap-2">
+							{/* Decrease Button */}
+							<button
+							onClick={() => updateQty(item.id, -1)}
+							className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
+							>
+							-
+							</button>
+
+							{/* Quantity Display */}
+							<span className="w-6 text-center">{item.qty}</span>
+
+							{/* Increase Button */}
+							<button
+							onClick={() => updateQty(item.id, 1)}
+							className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
+							>
+							+
+							</button>
+						</div>
+
+						{/* Total Price */}
+						<strong>₹{item.price * item.qty}</strong>
+						</div>
+
+					))}
+				</div>
+
+				<hr className="my-4" />
+
+				<div className="space-y-1 text-slate-700">
+					<div className="flex justify-between">
+					<span>Subtotal</span>
+					<span>₹{subtotal}</span>
+					</div>
+					<div className="flex justify-between">
+					<span>Tax (5%)</span>
+					<span>₹{tax.toFixed(2)}</span>
+					</div>
+					<div className="flex justify-between text-lg font-semibold">
+					<span>Total</span>
+					<span>₹{total.toFixed(2)}</span>
+					</div>
+				</div>
+
+				<div className="mt-4 flex flex-col gap-2">
+					<Button
+					onClick={() => alert("KOT sent to kitchen")}
+					className="bg-orange-500 hover:bg-orange-600 text-white"
+					>
+					Send to Kitchen
 					</Button>
 
-					<h2 style={{ margin: 0 }}>Order – Table {tableId}</h2>
+					<Button
+					onClick={() => navigate(`/bill?table=${tableId}`)}
+					className="bg-green-600 hover:bg-green-700 text-white"
+					>
+					Generate Bill
+					</Button>
 				</div>
-				<div style={styles.container}>
-					{/* LEFT: Products */}
-					<div style={styles.left}>
-						<Card>
-							<h3>Categories</h3>
-							<div style={styles.categories}>
-								{CATEGORIES.map((c) => (
-									<Button
-										key={c}
-										onClick={() => setCategory(c)}
-										style={{
-											background: category === c ? "#2563eb" : "#e5e7eb",
-											color: category === c ? "#fff" : "#000",
-										}}
-									>
-										{c}
-									</Button>
-								))}
-							</div>
-						</Card>
-
-						<Card>
-							<h3>Items</h3>
-							<div style={styles.products}>
-								{filteredProducts.map((p) => (
-									<div
-										key={p.id}
-										style={styles.product}
-										onClick={() => addItem(p)}
-									>
-										<strong>{p.name}</strong>
-										<div>₹{p.price}</div>
-									</div>
-								))}
-							</div>
-						</Card>
-					</div>
-
-					{/* RIGHT: Bill */}
-					<div style={styles.right}>
-						<Card>
-							<h3>Current Bill</h3>
-
-							{cart.length === 0 && <p>No items added</p>}
-
-							{cart.map((item) => (
-								<div key={item.id} style={styles.cartItem}>
-									<span>{item.name}</span>
-									<div>
-										<Button onClick={() => updateQty(item.id, -1)}>-</Button>
-										<span style={{ margin: "0 8px" }}>{item.qty}</span>
-										<Button onClick={() => updateQty(item.id, 1)}>+</Button>
-									</div>
-									<strong>₹{item.price * item.qty}</strong>
-								</div>
-							))}
-
-							<hr />
-
-							<div style={styles.summary}>
-								<div>Subtotal: ₹{subtotal}</div>
-								<div>Tax (5%): ₹{tax.toFixed(2)}</div>
-								<h3>Total: ₹{total.toFixed(2)}</h3>
-							</div>
-
-							<Button onClick={() => alert("KOT sent to kitchen")}>
-								Send to Kitchen
-							</Button>
-
-							<Button onClick={() => navigate(`/bill?table=${tableId}`)}>
-								Generate Bill
-							</Button>
-						</Card>
-					</div>
-				</div>
+				</Card>
 			</div>
-		</>
-	);
+			</div>
+		</div>
+		);
 }
 
 const styles = {
