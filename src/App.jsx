@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginScreen from "./screens/LoginScreen";
 import TableScreen from "./screens/TableScreen";
-import BillingScreen from "./screens/Billingscreen";
+import BillingScreen from "./screens/BillingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import KitchenScreen from "./screens/KitchenScreen";
 import BillPreviewScreen from "./screens/BillPreviewScreen";
