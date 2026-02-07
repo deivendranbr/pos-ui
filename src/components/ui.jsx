@@ -16,21 +16,6 @@ export function Button({ children, ...props }) {
   );
 }
 
-// export function Card({ children }) {
-//   return (
-//     <div
-//       style={{
-//         border: "1px solid #e5e7eb",
-//         borderRadius: 8,
-//         padding: 16,
-//         background: "#fff",
-//       }}
-//     >
-//       {children}
-//     </div>
-//   );
-// }
-
 export function Card({ children, onClick, style, ...rest }) {
   return (
     <div
@@ -68,6 +53,7 @@ export function Input(props) {
         border: "1px solid #d1d5db",
         borderRadius: 4,
         width: "100%",
+        boxSizing: "border-box",
       }}
       {...props}
     />
