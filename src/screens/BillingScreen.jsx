@@ -3,35 +3,42 @@ import { Button, Card } from "../components/ui";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useOrders } from "../context/OrderContext";
 
-const CATEGORIES = ["All", "Beverages", "Starters", "Main Course"];
+const BillingScreen = ({ onPay }) => {
+	const [categories, setCategories] = useState(["All"]);
 
-const PRODUCTS = [
-  // Beverages
-  { id: 1, name: "Tea", price: 20, category: "Beverages" },
-  { id: 2, name: "Coffee", price: 30, category: "Beverages" },
-  { id: 5, name: "Cold Coffee", price: 50, category: "Beverages" },
-  { id: 6, name: "Masala Chai", price: 25, category: "Beverages" },
-  { id: 7, name: "Lemonade", price: 35, category: "Beverages" },
-  { id: 8, name: "Mango Shake", price: 60, category: "Beverages" },
+	useEffect(() => {
+		const storedCategories = JSON.parse(localStorage.getItem('appSettings_categories') || '["Beverages", "Starters", "Main Course"]');
+		setCategories(["All", ...storedCategories]);
+	}, []);
 
-  // Starters
-  { id: 3, name: "Veg Sandwich", price: 80, category: "Starters" },
-  { id: 9, name: "Paneer Tikka", price: 120, category: "Starters" },
-  { id: 10, name: "French Fries", price: 60, category: "Starters" },
-  { id: 11, name: "Spring Roll", price: 90, category: "Starters" },
-  { id: 12, name: "Cheese Garlic Bread", price: 100, category: "Starters" },
+	const PRODUCTS = [
+		// Beverages
+		{ id: 1, name: "Tea", price: 20, category: "Beverages" },
+		{ id: 2, name: "Coffee", price: 30, category: "Beverages" },
+		{ id: 5, name: "Cold Coffee", price: 50, category: "Beverages" },
+		{ id: 6, name: "Masala Chai", price: 25, category: "Beverages" },
+		{ id: 7, name: "Lemonade", price: 35, category: "Beverages" },
+		{ id: 8, name: "Mango Shake", price: 60, category: "Beverages" },
 
-  // Main Course
-  { id: 4, name: "Paneer Butter Masala", price: 180, category: "Main Course" },
-  { id: 13, name: "Veg Biryani", price: 150, category: "Main Course" },
-  { id: 14, name: "Dal Makhani", price: 140, category: "Main Course" },
-  { id: 15, name: "Mix Veg Curry", price: 130, category: "Main Course" },
-  { id: 16, name: "Chole Bhature", price: 120, category: "Main Course" },
-  { id: 17, name: "Butter Naan", price: 40, category: "Main Course" },
-];
+		// Starters
+		{ id: 3, name: "Veg Sandwich", price: 80, category: "Starters" },
+		{ id: 9, name: "Paneer Tikka", price: 120, category: "Starters" },
+		{ id: 10, name: "French Fries", price: 60, category: "Starters" },
+		{ id: 11, name: "Spring Roll", price: 90, category: "Starters" },
+		{ id: 12, name: "Cheese Garlic Bread", price: 100, category: "Starters" },
 
-export default function BillingScreen({ onPay }) {
+		// Main Course
+		{ id: 4, name: "Paneer Butter Masala", price: 180, category: "Main Course" },
+		{ id: 13, name: "Veg Biryani", price: 150, category: "Main Course" },
+		{ id: 14, name: "Dal Makhani", price: 140, category: "Main Course" },
+		{ id: 15, name: "Mix Veg Curry", price: 130, category: "Main Course" },
+		{ id: 16, name: "Chole Bhature", price: 120, category: "Main Course" },
+		{ id: 17, name: "Butter Naan", price: 40, category: "Main Course" },
+	];
+
+
 	const [category, setCategory] = useState("All");
+	const currency = localStorage.getItem('currencySymbol') || '₹';
 
 	const [params] = useSearchParams();
 	const tableId = params.get("table");
@@ -77,158 +84,171 @@ export default function BillingScreen({ onPay }) {
 
 	return (
 		<div className="min-h-screen bg-slate-100 p-4">
-			
+
 			{/* Header */}
 			<div className="flex items-center gap-3 mb-4">
-			<Button
-				onClick={() => navigate("/tables")}
-				className="bg-slate-500 hover:bg-slate-600 text-white"
-			>
-				← Tables
-			</Button>
+				<Button
+					onClick={() => navigate("/tables")}
+					className="bg-slate-500 hover:bg-slate-600 text-white"
+				>
+					← Tables
+				</Button>
 
-			<h2 className="text-xl font-semibold">
-				Order – Table {tableId}
-			</h2>
+				<h2 className="text-xl font-semibold">
+					Order – Table {tableId}
+				</h2>
 			</div>
 
 			{/* Main Layout */}
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-100px)]">
 
-			{/* LEFT SIDE */}
-			<div className="lg:col-span-2 flex flex-col gap-4">
+				{/* LEFT SIDE */}
+				<div className="lg:col-span-2 flex flex-col gap-4">
 
-				{/* Categories */}
-				<Card className="bg-white rounded-xl">
-					<h3 className="text-lg font-semibold mb-3">Categories</h3>
+					{/* Categories */}
+					<Card className="bg-white rounded-xl">
+						<h3 className="text-lg font-semibold mb-3">Categories</h3>
 
-					<div className="flex flex-wrap gap-2">
-						{CATEGORIES.map((c) => (
-							<Button
-							key={c}
-							onClick={() => setCategory(c)}
-							className={`
+						<div className="flex overflow-x-auto space-x-2 px-2 py-2">
+							{categories.map((c) => (
+								<Button
+									key={c}
+									onClick={() => setCategory(c)}
+									className={`
 								px-4 py-2 rounded-full text-sm font-medium
 								transition-colors duration-200
-								${
-								category === c
-									? "bg-blue-600 text-white shadow-md ring-2 ring-blue-300"
-									: "bg-slate-600 text-slate-800 hover:bg-slate-300"
-								}
+								${category === c
+											? "bg-blue-600 text-white shadow-md ring-2 ring-blue-300"
+											: "bg-slate-600 text-slate-800 hover:bg-slate-300"
+										}
 							`}
-							>
-							{c}
-							</Button>
-						))}
-					</div>
-				</Card>
+								>
+									{c}
+								</Button>
+							))}
+						</div>
+						{/* <div class="flex overflow-x-auto space-x-2 px-2 py-2">
+						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white shadow-md ring-2 ring-blue-300 hover:bg-blue-700 active:scale-95 transition">
+							All
+						</button>
+						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-slate-600 text-slate-800 hover:bg-slate-300 active:scale-95 transition">
+							Beverages
+						</button>
+						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-slate-600 text-slate-800 hover:bg-slate-300 active:scale-95 transition">
+							Starters
+						</button>
+						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-slate-600 text-slate-800 hover:bg-slate-300 active:scale-95 transition">
+							Main Course
+						</button>
+					</div> */}
+					</Card>
 
-				{/* Items */}
-				<Card className="bg-white rounded-xl flex-1">
-				<h3 className="text-lg font-semibold mb-3">Items</h3>
+					{/* Items */}
+					<Card className="bg-white rounded-xl flex-1">
+						<h3 className="text-lg font-semibold mb-3">Items</h3>
 
-				<div className="grid grid-cols-2 gap-3 content-start">
-					{filteredProducts.map((p) => (
-					<div
-						key={p.id}
-						onClick={() => addItem(p)}
-						className="border rounded-lg p-3 cursor-pointer
+						<div className="grid grid-cols-2 gap-3 content-start">
+							{filteredProducts.map((p) => (
+								<div
+									key={p.id}
+									onClick={() => addItem(p)}
+									className="border rounded-lg p-3 cursor-pointer
 						hover:shadow-md transition bg-slate-50"
-					>
-						<strong className="block">{p.name}</strong>
-						<span className="text-slate-600">₹{p.price}</span>
-					</div>
-					))}
+								>
+									<strong className="block">{p.name}</strong>
+									<span className="text-slate-600">₹{p.price}</span>
+								</div>
+							))}
+						</div>
+					</Card>
 				</div>
-				</Card>
-			</div>
 
-			{/* RIGHT SIDE – BILL */}
-			<div>
-				<Card className="bg-white rounded-xl sticky top-4">
-				<h3 className="text-lg font-semibold mb-3">Current Bill</h3>
+				{/* RIGHT SIDE – BILL */}
+				<div>
+					<Card className="bg-white rounded-xl sticky top-4">
+						<h3 className="text-lg font-semibold mb-3">Current Bill</h3>
 
-				{cart.length === 0 && (
-					<p className="text-slate-500">No items added</p>
-				)}
+						{cart.length === 0 && (
+							<p className="text-slate-500">No items added</p>
+						)}
 
-				<div className="space-y-2">
-					{cart.map((item) => (
-					<div
-						key={item.id}
-						className="flex items-center justify-between"
-						>
-						{/* Item Name */}
-						<span className="w-24 text-slate-800 font-medium break-words leading-snug">
-							{item.name}
-						</span>
+						<div className="space-y-2">
+							{cart.map((item) => (
+								<div
+									key={item.id}
+									className="flex items-center justify-between"
+								>
+									{/* Item Name */}
+									<span className="w-24 text-slate-800 font-medium break-words leading-snug">
+										{item.name}
+									</span>
 
-						{/* Quantity Controls */}
-						<div className="flex items-center gap-2">
-							{/* Decrease Button */}
-							<button
-							onClick={() => updateQty(item.id, -1)}
-							className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
-							>
-							-
-							</button>
+									{/* Quantity Controls */}
+									<div className="flex items-center gap-2">
+										{/* Decrease Button */}
+										<button
+											onClick={() => updateQty(item.id, -1)}
+											className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
+										>
+											-
+										</button>
 
-							{/* Quantity Display */}
-							<span className="w-6 text-center">{item.qty}</span>
+										{/* Quantity Display */}
+										<span className="w-6 text-center">{item.qty}</span>
 
-							{/* Increase Button */}
-							<button
-							onClick={() => updateQty(item.id, 1)}
-							className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
-							>
-							+
-							</button>
+										{/* Increase Button */}
+										<button
+											onClick={() => updateQty(item.id, 1)}
+											className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
+										>
+											+
+										</button>
+									</div>
+
+									{/* Total Price */}
+									<strong>₹{item.price * item.qty}</strong>
+								</div>
+
+							))}
 						</div>
 
-						{/* Total Price */}
-						<strong>₹{item.price * item.qty}</strong>
+						<hr className="my-4" />
+
+						<div className="space-y-1 text-slate-700">
+							<div className="flex justify-between">
+								<span>Subtotal</span>
+								<span>₹{subtotal}</span>
+							</div>
+							<div className="flex justify-between">
+								<span>Tax (5%)</span>
+								<span>₹{tax.toFixed(2)}</span>
+							</div>
+							<div className="flex justify-between text-lg font-semibold">
+								<span>Total</span>
+								<span>₹{total.toFixed(2)}</span>
+							</div>
 						</div>
 
-					))}
+						<div className="mt-4 flex flex-col gap-2">
+							<Button
+								onClick={() => alert("KOT sent to kitchen")}
+								className="bg-orange-500 hover:bg-orange-600 text-white"
+							>
+								Send to Kitchen
+							</Button>
+
+							<Button
+								onClick={() => navigate(`/bill?table=${tableId}`)}
+								className="bg-green-600 hover:bg-green-700 text-white"
+							>
+								Generate Bill
+							</Button>
+						</div>
+					</Card>
 				</div>
-
-				<hr className="my-4" />
-
-				<div className="space-y-1 text-slate-700">
-					<div className="flex justify-between">
-					<span>Subtotal</span>
-					<span>₹{subtotal}</span>
-					</div>
-					<div className="flex justify-between">
-					<span>Tax (5%)</span>
-					<span>₹{tax.toFixed(2)}</span>
-					</div>
-					<div className="flex justify-between text-lg font-semibold">
-					<span>Total</span>
-					<span>₹{total.toFixed(2)}</span>
-					</div>
-				</div>
-
-				<div className="mt-4 flex flex-col gap-2">
-					<Button
-					onClick={() => alert("KOT sent to kitchen")}
-					className="bg-orange-500 hover:bg-orange-600 text-white"
-					>
-					Send to Kitchen
-					</Button>
-
-					<Button
-					onClick={() => navigate(`/bill?table=${tableId}`)}
-					className="bg-green-600 hover:bg-green-700 text-white"
-					>
-					Generate Bill
-					</Button>
-				</div>
-				</Card>
-			</div>
 			</div>
 		</div>
-		);
+	);
 }
 
 const styles = {
@@ -289,3 +309,5 @@ const styles = {
 		background: "#16a34a",
 	},
 };
+
+export default BillingScreen;

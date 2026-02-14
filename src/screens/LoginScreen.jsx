@@ -29,6 +29,23 @@ export default function LoginScreen() {
           >
             Login
           </Button>
+          <div className="text-center mt-4">
+            <Button
+              variant="link"
+              className="text-sm text-gray-500 hover:text-gray-700"
+              onClick={() => navigate("/hotel")}
+            >
+              Captain Login
+            </Button>
+            <br />
+            <Button
+              variant="link"
+              className="text-sm text-purple-500 hover:text-purple-700 mt-2"
+              onClick={() => navigate("/super-admin")}
+            >
+              Super Admin Login
+            </Button>
+          </div>
         </div>
       </Card>
     </div>

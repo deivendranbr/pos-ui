@@ -7,6 +7,7 @@ export default function BillPreviewScreen() {
   const tableId = params.get("table");
   const navigate = useNavigate();
   const { getOrder } = useOrders();
+  const currency = localStorage.getItem('currencySymbol') || '₹';
 
   const cart = getOrder(tableId);
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
@@ -18,12 +19,12 @@ export default function BillPreviewScreen() {
 
         {cart.map((i) => (
           <div key={i.id}>
-            {i.name} × {i.qty} = ₹{i.price * i.qty}
+            {i.name} × {i.qty} = {currency}{i.price * i.qty}
           </div>
         ))}
 
         <hr />
-        <h3>Total: ₹{total}</h3>
+        <h3>Total: {currency}{total}</h3>
 
         <Button onClick={() => navigate(`/payment?table=${tableId}`)}>
           Proceed to Payment

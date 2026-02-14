@@ -5,6 +5,8 @@ import BillingScreen from "./screens/BillingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import KitchenScreen from "./screens/KitchenScreen";
 import BillPreviewScreen from "./screens/BillPreviewScreen";
+import HotelDashboardScreen from "./screens/HotelDashboardScreen";
+import SuperAdminScreen from "./screens/SuperAdminScreen";
 
 
 export default function App() {
@@ -17,6 +19,8 @@ export default function App() {
       <Route path="/payment" element={<PaymentScreen />} />
       <Route path="/kitchen" element={<KitchenScreen />} />
       <Route path="/bill" element={<BillPreviewScreen />} />
+      <Route path="/hotel" element={<HotelDashboardScreen />} />
+      <Route path="/super-admin" element={<SuperAdminScreen />} />
     </Routes>
   );
 }
