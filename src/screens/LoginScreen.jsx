@@ -24,7 +24,7 @@ export default function LoginScreen() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password, hotelcode }),
+        body: JSON.stringify({ username, password, hotel_code: hotelcode }),
       });
 
       const data = await res.json();
