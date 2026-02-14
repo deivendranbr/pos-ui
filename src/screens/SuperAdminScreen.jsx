@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "http://localhost:3000";
 
 const SuperAdminScreen = () => {
     const navigate = useNavigate();
@@ -96,7 +96,7 @@ const SuperAdminScreen = () => {
                 return alert(data.error || "Failed to create hotel");
             }
 
-            setHotels(prev => [...prev, data.hotel]);
+            setHotels(prev => [...prev, data]);
             alert("Hotel, login & database created successfully ✅");
 
             // Reset form
@@ -174,7 +174,7 @@ const SuperAdminScreen = () => {
             }
 
             // Update list
-            setHotelUsers([...hotelUsers, data.user]);
+            setHotelUsers(prev => [...prev, data]);
             alert("User added successfully");
             setNewUsername("");
             setNewPassword("");
