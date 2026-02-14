@@ -123,33 +123,6 @@ const HotelDashboardScreen = () => {
                         </button>
                     </div>
                     <div className="flex space-x-2">
-                        <button className="bg-[#475569] text-white px-5 py-1.5 rounded-lg text-xs font-black shadow-sm hover:bg-[#334155] transition-all active:scale-95">Delivery</button>
-                        <button className="bg-[#475569] text-white px-5 py-1.5 rounded-lg text-xs font-black shadow-sm hover:bg-[#334155] transition-all active:scale-95">Take Away</button>
-                    </div>
-                </div>
-
-                {/* Action Bar */}
-                <div className="px-5 py-4 flex flex-wrap items-center justify-between gap-4 border-b border-[#F1F5F9]">
-                    <div className="flex items-center space-x-3">
-                        <button className="bg-[#2563EB] text-white px-5 py-2 rounded-lg text-xs font-black shadow-md hover:bg-[#1D4ED8] transition-all active:scale-95">+ Table Reservation</button>
-                        <button className="bg-[#2563EB] text-white px-5 py-2 rounded-lg text-xs font-black shadow-md hover:bg-[#1D4ED8] transition-all active:scale-95">+ Contactless</button>
-                        <button
-                            onClick={handleAddTable}
-                            className="bg-[#059669] text-white px-5 py-2 rounded-lg text-xs font-black shadow-md hover:bg-[#047857] transition-all active:scale-95"
-                        >
-                            + Add Table
-                        </button>
-                    </div>
-
-                    <div className="flex items-center space-x-6 flex-wrap">
-                        <div className="flex items-center space-x-3 bg-white px-3 py-1.5 rounded-full border border-[#E2E8F0]">
-                            <div className="w-10 h-5 bg-[#CBD5E1] rounded-full relative cursor-pointer">
-                                <div className="w-4 h-4 bg-white rounded-full absolute top-0.5 left-0.5 shadow-sm transform transition-transform"></div>
-                            </div>
-                            <span className="text-[10px] font-black text-[#64748B] uppercase tracking-wider">Move KOT/ Items</span>
-                        </div>
-
-                        {/* Legend */}
                         <div className="flex items-center space-x-5 text-[10px] font-black text-[#94A3B8] uppercase tracking-wider">
                             <div className="flex items-center space-x-1.5">
                                 <div className="w-3.5 h-3.5 bg-[#F1F5F9] border border-[#E2E8F0] rounded-full"></div>
@@ -172,15 +145,64 @@ const HotelDashboardScreen = () => {
                                 <span>KOT</span>
                             </div>
                         </div>
+                        {/* <button className="bg-[#475569] text-white px-5 py-1.5 rounded-lg text-xs font-black shadow-sm hover:bg-[#334155] transition-all active:scale-95">Delivery</button>
+                        <button className="bg-[#475569] text-white px-5 py-1.5 rounded-lg text-xs font-black shadow-sm hover:bg-[#334155] transition-all active:scale-95">Take Away</button> */}
+                    </div>
+                </div>
 
-                        <div className="flex items-center space-x-2">
+                {/* Action Bar */}
+                {/* <div className="px-5 py-4 flex flex-wrap items-center justify-between gap-4 border-b border-[#F1F5F9]"> */}
+                    {/* <div className="flex items-center space-x-3">
+                        <button className="bg-[#2563EB] text-white px-5 py-2 rounded-lg text-xs font-black shadow-md hover:bg-[#1D4ED8] transition-all active:scale-95">+ Table Reservation</button>
+                        <button className="bg-[#2563EB] text-white px-5 py-2 rounded-lg text-xs font-black shadow-md hover:bg-[#1D4ED8] transition-all active:scale-95">+ Contactless</button>
+                        <button
+                            onClick={handleAddTable}
+                            className="bg-[#059669] text-white px-5 py-2 rounded-lg text-xs font-black shadow-md hover:bg-[#047857] transition-all active:scale-95"
+                        >
+                            + Add Table
+                        </button>
+                    </div> */}
+
+                    {/* <div className="flex items-center space-x-6 flex-wrap"> */}
+                        {/* <div className="flex items-center space-x-3 bg-white px-3 py-1.5 rounded-full border border-[#E2E8F0]">
+                            <div className="w-10 h-5 bg-[#CBD5E1] rounded-full relative cursor-pointer">
+                                <div className="w-4 h-4 bg-white rounded-full absolute top-0.5 left-0.5 shadow-sm transform transition-transform"></div>
+                            </div>
+                            <span className="text-[10px] font-black text-[#64748B] uppercase tracking-wider">Move KOT/ Items</span>
+                        </div> */}
+
+                        {/* Legend */}
+                        {/* <div className="flex items-center space-x-5 text-[10px] font-black text-[#94A3B8] uppercase tracking-wider">
+                            <div className="flex items-center space-x-1.5">
+                                <div className="w-3.5 h-3.5 bg-[#F1F5F9] border border-[#E2E8F0] rounded-full"></div>
+                                <span>Blank</span>
+                            </div>
+                            <div className="flex items-center space-x-1.5">
+                                <div className="w-3.5 h-3.5 bg-[#BAE6FD] border border-[#7DD3FC] rounded-full"></div>
+                                <span>Running</span>
+                            </div>
+                            <div className="flex items-center space-x-1.5">
+                                <div className="w-3.5 h-3.5 bg-[#BBF7D0] border border-[#86EFAC] rounded-full"></div>
+                                <span>Printed</span>
+                            </div>
+                            <div className="flex items-center space-x-1.5">
+                                <div className="w-3.5 h-3.5 bg-[#FFEDD5] border border-[#FED7AA] rounded-full"></div>
+                                <span>Paid</span>
+                            </div>
+                            <div className="flex items-center space-x-1.5">
+                                <div className="w-3.5 h-3.5 bg-[#FEF08A] border border-[#FDE047] rounded-full"></div>
+                                <span>KOT</span>
+                            </div>
+                        </div> */}
+
+                        {/* <div className="flex items-center space-x-2">
                             <span className="text-[10px] font-black text-[#94A3B8] uppercase tracking-wider">Plan</span>
                             <select className="text-xs border border-[#E2E8F0] rounded-lg p-1.5 font-bold text-[#475569] bg-white outline-none focus:ring-1 focus:ring-[#2563EB]">
                                 <option>Default Layout</option>
                             </select>
-                        </div>
-                    </div>
-                </div>
+                        </div> */}
+                    {/* </div> */}
+                {/* </div> */}
 
                 {/* Table Grid Content */}
                 <div className="p-6 overflow-y-auto flex-1">
@@ -233,14 +255,14 @@ const HotelDashboardScreen = () => {
                         </svg>
                     </button>
                     <div className="flex items-center space-x-1">
-                        <div className="w-10 h-10 bg-[#2563EB] rounded-md flex items-center justify-center text-white font-black shadow-sm">POS</div>
+                        {/* <div className="w-10 h-10 bg-[#2563EB] rounded-md flex items-center justify-center text-white font-black shadow-sm">POS</div> */}
                         <div className="leading-none hidden sm:block">
                             <div className="text-[10px] font-bold text-[#94A3B8]">Connectra</div>
                             <div className="text-xs font-black text-[#1E293B] tracking-tighter">POSS</div>
                         </div>
                     </div>
-                    <button className="bg-[#2563EB] text-white px-3 py-1.5 rounded-md text-xs font-black ml-2 shadow-sm hover:bg-[#1D4ED8] transition-colors">New Order</button>
-                    <div className="relative hidden md:block">
+                    {/* <button className="bg-[#2563EB] text-white px-3 py-1.5 rounded-md text-xs font-black ml-2 shadow-sm hover:bg-[#1D4ED8] transition-colors">New Order</button> */}
+                    {/* <div className="relative hidden md:block">
                         <input
                             type="text"
                             placeholder="Bill No"
@@ -251,12 +273,12 @@ const HotelDashboardScreen = () => {
                         <svg className="w-3.5 h-3.5 text-[#94A3B8] absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="flex items-center space-x-6">
                     {/* Feature Icons */}
-                    <div className="hidden lg:flex items-center space-x-4">
+                    {/* <div className="hidden lg:flex items-center space-x-4">
                         {[
                             { label: 'Menu on/off', icon: 'M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
                             { label: 'Store status', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -270,7 +292,7 @@ const HotelDashboardScreen = () => {
                                 <span className="text-[8px] font-black text-[#94A3B8] mt-1 uppercase leading-none group-hover:text-[#2563EB] transition-colors">{item.label}</span>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
 
                     {/* Support Box */}
                     <div className="flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
