@@ -9,10 +9,13 @@ export default function LoginScreen() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [hotelcode, setHotelcode] = useState(
+    () => localStorage.getItem("hotelcode") || ""
+  );
 
   const handleLogin = async () => {
-    if (!username || !password) {
-      return alert("Username & Password required");
+    if (!username || !password || !hotelcode) {
+      return alert("Username, Password & Hotel Code required");
     }
 
     try {
@@ -21,7 +24,7 @@ export default function LoginScreen() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, hotelcode }),
       });
 
       const data = await res.json();
@@ -31,17 +34,16 @@ export default function LoginScreen() {
         return alert(data.message || "Login failed");
       }
 
-      // Save token
+      // Save token & user info
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("hotelcode", hotelcode);
 
       alert("Login successful ✅");
 
-      console.log(data.user.role);
-      if(data.user.role === 'admin') {
-        navigate('/hotel');
-      }
-      else {
+      if (data.user?.role === "admin") {
+        navigate("/hotel");
+      } else {
         navigate("/tables");
       }
     } catch (error) {
@@ -72,10 +74,16 @@ export default function LoginScreen() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
+          <Input
+            placeholder="Hotel Code"
+            className="w-full"
+            value={hotelcode}
+            onChange={(e) => setHotelcode(e.target.value)}
+          />
+
           <Button className="w-full mt-2" onClick={handleLogin}>
             Captain Login
           </Button>
-
 
           <div className="text-center mt-4">
             <Button
