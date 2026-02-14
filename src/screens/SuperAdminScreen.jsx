@@ -310,7 +310,8 @@ const SuperAdminScreen = () => {
                                     <div className="text-sm text-gray-600 mt-2 grid grid-cols-2 gap-2">
                                         <p><span className="font-semibold">Owner:</span> {hotel.owner_name}</p>
                                         <p><span className="font-semibold">Phone:</span> {hotel.phone}</p>
-                                        <p className="col-span-2"><span className="font-semibold">Email:</span> {hotel.email}</p>
+                                        <p><span className="font-semibold">Email:</span> {hotel.email}</p>
+                                        <p><span className="font-semibold">Hotel Code:</span> {hotel.hotel_code}</p>
                                     </div>
                                 </div>
                                 <div className="mt-4 pt-3 border-t flex justify-end">
