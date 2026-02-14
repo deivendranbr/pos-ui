@@ -83,80 +83,67 @@ const BillingScreen = ({ onPay }) => {
 	const total = subtotal + tax;
 
 	return (
-		<div className="min-h-screen bg-slate-100 p-4">
+		<div className="min-h-screen bg-[#F0F4F8] p-4 font-sans">
 
 			{/* Header */}
-			<div className="flex items-center gap-3 mb-4">
+			<div className="flex items-center gap-3 mb-6 bg-transparent">
 				<Button
-					onClick={() => navigate("/tables")}
-					className="bg-slate-500 hover:bg-slate-600 text-white"
+					onClick={() => navigate("/hotel")}
+					className="bg-[#6B728E] hover:bg-[#50577A] text-white flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-all"
 				>
-					← Tables
+					<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+					</svg>
+					Tables
 				</Button>
 
-				<h2 className="text-xl font-semibold">
+				<h2 className="text-xl font-black text-[#1E293B] tracking-tight">
 					Order – Table {tableId}
 				</h2>
 			</div>
 
 			{/* Main Layout */}
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-100px)]">
+			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-120px)]">
 
-				{/* LEFT SIDE */}
-				<div className="lg:col-span-2 flex flex-col gap-4">
+				{/* LEFT SIDE - Categories & Items */}
+				<div className="lg:col-span-3 flex flex-col gap-6 overflow-hidden">
 
 					{/* Categories */}
-					<Card className="bg-white rounded-xl">
-						<h3 className="text-lg font-semibold mb-3">Categories</h3>
+					<Card className="bg-white rounded-xl shadow-sm border border-[#E2E8F0] p-5">
+						<h3 className="text-sm font-black text-[#64748B] uppercase tracking-wider mb-4">Categories</h3>
 
-						<div className="flex overflow-x-auto space-x-2 px-2 py-2">
+						<div className="flex flex-wrap gap-2">
 							{categories.map((c) => (
-								<Button
+								<button
 									key={c}
 									onClick={() => setCategory(c)}
 									className={`
-								px-4 py-2 rounded-full text-sm font-medium
-								transition-colors duration-200
-								${category === c
-											? "bg-blue-600 text-white shadow-md ring-2 ring-blue-300"
-											: "bg-slate-600 text-slate-800 hover:bg-slate-300"
+										px-5 py-2.5 rounded-lg text-sm font-black transition-all duration-200
+										${category === c
+											? "bg-[#2563EB] text-white shadow-md active:scale-95"
+											: "bg-[#475569] text-white hover:bg-[#334155] active:scale-95"
 										}
-							`}
+									`}
 								>
 									{c}
-								</Button>
+								</button>
 							))}
 						</div>
-						{/* <div class="flex overflow-x-auto space-x-2 px-2 py-2">
-						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white shadow-md ring-2 ring-blue-300 hover:bg-blue-700 active:scale-95 transition">
-							All
-						</button>
-						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-slate-600 text-slate-800 hover:bg-slate-300 active:scale-95 transition">
-							Beverages
-						</button>
-						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-slate-600 text-slate-800 hover:bg-slate-300 active:scale-95 transition">
-							Starters
-						</button>
-						<button class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-slate-600 text-slate-800 hover:bg-slate-300 active:scale-95 transition">
-							Main Course
-						</button>
-					</div> */}
 					</Card>
 
 					{/* Items */}
-					<Card className="bg-white rounded-xl flex-1">
-						<h3 className="text-lg font-semibold mb-3">Items</h3>
+					<Card className="bg-white rounded-xl shadow-sm border border-[#E2E8F0] p-5 flex-1 overflow-y-auto">
+						<h3 className="text-sm font-black text-[#64748B] uppercase tracking-wider mb-4">Items</h3>
 
-						<div className="grid grid-cols-2 gap-3 content-start">
+						<div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 content-start">
 							{filteredProducts.map((p) => (
 								<div
 									key={p.id}
 									onClick={() => addItem(p)}
-									className="border rounded-lg p-3 cursor-pointer
-						hover:shadow-md transition bg-slate-50"
+									className="group border border-[#E2E8F0] rounded-xl p-4 cursor-pointer hover:border-[#2563EB] hover:shadow-md transition-all bg-white"
 								>
-									<strong className="block">{p.name}</strong>
-									<span className="text-slate-600">₹{p.price}</span>
+									<strong className="block text-[#1E293B] font-bold group-hover:text-[#2563EB] transition-colors">{p.name}</strong>
+									<span className="text-[#64748B] text-sm font-semibold">₹{p.price}</span>
 								</div>
 							))}
 						</div>
@@ -164,85 +151,80 @@ const BillingScreen = ({ onPay }) => {
 				</div>
 
 				{/* RIGHT SIDE – BILL */}
-				<div>
-					<Card className="bg-white rounded-xl sticky top-4">
-						<h3 className="text-lg font-semibold mb-3">Current Bill</h3>
+				<div className="lg:col-span-1 h-full">
+					<Card className="bg-white rounded-xl shadow-lg border border-[#E2E8F0] p-5 h-full flex flex-col">
+						<h3 className="text-sm font-black text-[#64748B] uppercase tracking-wider mb-4">Current Bill</h3>
 
-						{cart.length === 0 && (
-							<p className="text-slate-500">No items added</p>
-						)}
+						<div className="flex-1 overflow-y-auto space-y-4">
+							{cart.length === 0 ? (
+								<p className="text-[#94A3B8] text-sm font-medium italic">No items added</p>
+							) : (
+								cart.map((item) => (
+									<div
+										key={item.id}
+										className="flex items-center justify-between gap-2 border-b border-[#F1F5F9] pb-3"
+									>
+										{/* Item Name */}
+										<div className="flex-1">
+											<span className="block text-[#1E293B] font-bold break-words leading-tight">
+												{item.name}
+											</span>
+											<span className="text-[10px] text-[#64748B] font-bold">₹{item.price} x {item.qty}</span>
+										</div>
 
-						<div className="space-y-2">
-							{cart.map((item) => (
-								<div
-									key={item.id}
-									className="flex items-center justify-between"
-								>
-									{/* Item Name */}
-									<span className="w-24 text-slate-800 font-medium break-words leading-snug">
-										{item.name}
-									</span>
+										{/* Quantity Controls */}
+										<div className="flex items-center bg-[#F8FAFC] rounded-lg border border-[#E2E8F0] p-1">
+											<button
+												onClick={() => updateQty(item.id, -1)}
+												className="w-7 h-7 flex items-center justify-center text-sm font-bold text-[#64748B] hover:text-[#EF4444] transition-colors"
+											>
+												-
+											</button>
+											<span className="w-8 text-center text-sm font-black text-[#1E293B]">{item.qty}</span>
+											<button
+												onClick={() => updateQty(item.id, 1)}
+												className="w-7 h-7 flex items-center justify-center text-sm font-bold text-[#64748B] hover:text-[#22C55E] transition-colors"
+											>
+												+
+											</button>
+										</div>
 
-									{/* Quantity Controls */}
-									<div className="flex items-center gap-2">
-										{/* Decrease Button */}
-										<button
-											onClick={() => updateQty(item.id, -1)}
-											className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
-										>
-											-
-										</button>
-
-										{/* Quantity Display */}
-										<span className="w-6 text-center">{item.qty}</span>
-
-										{/* Increase Button */}
-										<button
-											onClick={() => updateQty(item.id, 1)}
-											className="px-2 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 focus:outline-none"
-										>
-											+
-										</button>
+										{/* Total Price */}
+										<strong className="text-[#1E293B] font-black min-w-[50px] text-right">₹{item.price * item.qty}</strong>
 									</div>
-
-									{/* Total Price */}
-									<strong>₹{item.price * item.qty}</strong>
-								</div>
-
-							))}
+								))
+							)}
 						</div>
 
-						<hr className="my-4" />
-
-						<div className="space-y-1 text-slate-700">
-							<div className="flex justify-between">
+						<div className="pt-4 mt-4 border-t-2 border-dashed border-[#E2E8F0] space-y-2">
+							<div className="flex justify-between text-sm font-bold text-[#64748B]">
 								<span>Subtotal</span>
-								<span>₹{subtotal}</span>
+								<span>₹{subtotal.toFixed(2)}</span>
 							</div>
-							<div className="flex justify-between">
+							<div className="flex justify-between text-sm font-bold text-[#64748B]">
 								<span>Tax (5%)</span>
 								<span>₹{tax.toFixed(2)}</span>
 							</div>
-							<div className="flex justify-between text-lg font-semibold">
+							<div className="flex justify-between text-lg font-black text-[#1E293B] pt-2">
 								<span>Total</span>
 								<span>₹{total.toFixed(2)}</span>
 							</div>
 						</div>
 
-						<div className="mt-4 flex flex-col gap-2">
-							<Button
+						<div className="mt-6 flex flex-col gap-3">
+							<button
 								onClick={() => alert("KOT sent to kitchen")}
-								className="bg-orange-500 hover:bg-orange-600 text-white"
+								className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white py-3 rounded-xl text-sm font-black shadow-lg shadow-orange-100 transition-all active:scale-95"
 							>
 								Send to Kitchen
-							</Button>
+							</button>
 
-							<Button
+							<button
 								onClick={() => navigate(`/bill?table=${tableId}`)}
-								className="bg-green-600 hover:bg-green-700 text-white"
+								className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-white py-3 rounded-xl text-sm font-black shadow-lg shadow-green-100 transition-all active:scale-95"
 							>
 								Generate Bill
-							</Button>
+							</button>
 						</div>
 					</Card>
 				</div>
